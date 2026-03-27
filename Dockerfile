@@ -5,9 +5,6 @@ RUN apt-get update && apt-get install -y ffmpeg && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Install CPU-only PyTorch to save ~3.5GB of space!
-RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
-
 # Install python packages
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt

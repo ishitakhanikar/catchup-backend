@@ -11,7 +11,7 @@ import os
 from services.audio import convert_audio
 from services.asr import transcribe_audio
 from services.nlp import clean_transcript
-from services.retrieval import build_vector_store, retrieve_relevant_chunks
+# (Removed FAISS retrieval imports)
 from services.llm import generate_structured_mom
 from services.pdf import create_pdf
 
@@ -51,17 +51,13 @@ async def generate_mom(
         # 4. Transcript Cleaning
         clean_text = clean_transcript(raw_transcript)
         
-        # 5. Information Retrieval
-        # Parse agenda items and embed chunks
+        # 5. Extract logic directly via 128k context LLM instead of RAG
         agenda_items = [item.strip() for item in agenda.split("\n") if item.strip()]
         if not agenda_items:
-            raise HTTPException(status_code=400, detail="Agenda cannot be empty.")
-            
-        vector_store = build_vector_store(clean_text)
-        retrieved_context = retrieve_relevant_chunks(vector_store, agenda_items)
+             raise HTTPException(status_code=400, detail="Agenda cannot be empty.")
         
-        # 6. LangChain Refinement
-        mom_data = generate_structured_mom(retrieved_context, agenda)
+        # 6. Structured Generation
+        mom_data = generate_structured_mom(clean_text, agenda)
         
         # 7. PDF Generation
         pdf_path = create_pdf(mom_data)

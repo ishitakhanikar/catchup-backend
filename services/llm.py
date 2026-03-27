@@ -3,9 +3,9 @@ from langchain_core.prompts import PromptTemplate
 import json
 import re
 
-def generate_structured_mom(context_chunks: str, agenda: str) -> dict:
+def generate_structured_mom(transcript: str, agenda: str) -> dict:
     """
-    Uses ChatGroq to generate a structured meeting summary strictly based on retrieved context.
+    Uses ChatGroq to generate a structured meeting summary strictly based on the entire transcript block.
     """
     llm = ChatGroq(temperature=0, model="llama-3.1-8b-instant", max_tokens=1500)
     
@@ -14,11 +14,11 @@ def generate_structured_mom(context_chunks: str, agenda: str) -> dict:
 Agenda: 
 {agenda}
 
-Transcript Context: 
-{chunks}
+Meeting Transcript: 
+{transcript}
 
 Instructions:
-1. Extract ONLY factual points from the transcript context provided.
+1. Extract ONLY factual points from the transcript text provided.
 2. DO NOT make assumptions or infer beyond the context.
 3. Break down the discussion specifically by each Agenda item.
 4. Highlight overall decisions and action items separately at the end.
@@ -41,7 +41,7 @@ OUTPUT STRICTLY AS RAW JSON ONLY. DO NOT WRAP IN BACKTICKS. DO NOT INCLUDE ANY C
 }}''')
     
     chain = prompt | llm
-    response = chain.invoke({"agenda": agenda, "chunks": context_chunks})
+    response = chain.invoke({"agenda": agenda, "transcript": transcript})
     
     content = response.content
     try:
