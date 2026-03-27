@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "CatchUp! MoM Generator",
+  "version": "1.0",
+  "description": "AI-powered extension that converts meeting recordings into structured Minutes of Meeting using speech recognition, contextual retrieval, and intelligent summarization.",
+  "icons": {
+    "16": "icon-16.png",
+    "48": "icon-48.png",
+    "128": "icon-128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "CatchUp!",
+    "default_icon": {
+      "16": "icon-16.png",
+      "48": "icon-48.png",
+      "128": "icon-128.png"
+    }
+  },
+  "permissions": [
+    "audioCapture",
+    "activeTab",
+    "storage",
+    "microphone",
+    "offscreen",
+    "downloads",
+    "notifications"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": [
+    "https://catchup-backend-production.up.railway.app/*",
+    "<all_urls>"
+  ]
+}

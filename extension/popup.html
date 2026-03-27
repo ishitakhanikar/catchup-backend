@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CatchUp!</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <svg width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M 5 40 C 5 25, 20 25, 20 25 H 65 C 65 25, 65 40, 65 40 V 65 C 65 80, 50 80, 50 80 H 30 L 15 95 V 80 C 5 80, 5 65, 5 65 Z"
+                        stroke="#3c376c" stroke-width="6" fill="transparent" />
+                    <path
+                        d="M 35 20 C 35 5, 50 5, 50 5 H 85 C 100 5, 100 20, 100 20 V 50 C 100 65, 85 65, 85 65 L 100 85 L 70 65 H 50 C 35 65, 35 50, 35 50 Z"
+                        fill="#6d55ff" />
+                    <path d="M 55 38 L 67.5 23 L 80 38 M 67.5 23 L 67.5 53" stroke="white" stroke-width="6"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <h1>CatchUp!</h1>
+            </div>
+            <p class="subtitle">AI-Powered Minutes of Meeting</p>
+        </header>
+
+        <div class="card agenda-section">
+            <div class="agenda-header">
+                <label for="agenda">Meeting Agenda</label>
+                <button id="set-default-btn" class="text-btn">Set as default</button>
+            </div>
+            <textarea id="agenda"
+                placeholder="1. Project timeline discussion&#10;2. Budget allocation&#10;3. Task assignments"></textarea>
+            <span id="default-saved-msg" class="hidden text-success">Saved!</span>
+        </div>
+
+        <div class="card audio-section">
+            <div class="tabs">
+                <button class="tab active" data-tab="record">Record</button>
+                <button class="tab" data-tab="upload">Upload File</button>
+            </div>
+
+            <div class="tab-content" id="record-content">
+                <button id="record-btn" class="btn primary-btn record-idle">
+                    <span class="btn-icon"></span>
+                    <span class="btn-text">Start Recording</span>
+                </button>
+                <p class="status-text hidden" id="record-status">Recording... 00:00</p>
+                <div id="visualizer" class="hidden">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+            </div>
+
+            <div class="tab-content hidden" id="upload-content">
+                <div class="file-upload">
+                    <input type="file" id="audio-file" accept="audio/wav,audio/mp3">
+                    <label for="audio-file" class="upload-label">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <span>Choose Audio File</span>
+                    </label>
+                    <p class="file-name" id="file-name-display">No file selected</p>
+                </div>
+            </div>
+        </div>
+
+        <button id="generate-btn" class="btn generate-btn" disabled>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            Generate MoM
+        </button>
+
+        <div id="loading" class="hidden">
+            <div class="spinner"></div>
+            <p>Summarising...</p>
+            <button id="cancel-btn" class="btn text-btn" style="margin-top:16px; color:var(--error); margin-left:auto; margin-right:auto;">Cancel Generation</button>
+        </div>
+
+        <div id="result" class="hidden card result-section">
+            <h3>Meeting Minutes Ready</h3>
+            <div class="file-name-input">
+                <input type="text" id="pdf-filename" value="Minutes_of_Meeting" placeholder="Enter file name" />
+                <span class="extension">.pdf</span>
+            </div>
+            <button id="download-pdf" class="btn secondary-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Download PDF
+            </button>
+        </div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+
+</html>
