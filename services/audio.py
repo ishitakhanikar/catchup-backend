@@ -13,24 +13,21 @@ def get_ffmpeg_cmd():
 
 def convert_audio(input_path: str) -> str:
     """
-    Converts audio to 16000Hz mono wav format suitable for Whisper ASR.
+    Compresses audio to extremely lightweight 32kbps mono mp3 format 
+    to safely bypass the 25MB API limits for 2-hour long meetings.
     """
-    base, ext = os.path.splitext(input_path)
-    if ext == '.wav':
-        # Even if it's wav we ensure 16k mono
-        output_path = f"{base}_16k.wav"
-    else:
-        output_path = f"{base}.wav"
+    base, _ = os.path.splitext(input_path)
+    output_path = f"{base}_compressed.mp3"
         
     try:
         (
             ffmpeg
             .input(input_path)
-            .output(output_path, ac=1, ar='16000') # 1 channel, 16kHz
+            .output(output_path, format='mp3', acodec='libmp3lame', ac=1, ar='16000', audio_bitrate='32k')
             .overwrite_output()
             .run(cmd=get_ffmpeg_cmd(), quiet=True)
         )
         return output_path
     except ffmpeg.Error as e:
-        print("FFprobe error:", e.stderr)
-        raise Exception("Audio conversion failed.")
+        print("FFmpeg compression error:", e.stderr)
+        raise Exception("Audio compression failed.")
