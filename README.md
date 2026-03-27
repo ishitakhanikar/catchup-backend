@@ -5,11 +5,11 @@
 
 ---
 
-## 🚀 Overview
+## Overview
 
 **CatchUp!** is an AI-powered Minute of Meeting (MoM) generator. Built with a **Chrome Extension Service-Worker frontend** and a **FastAPI containerized backend**, it orchestrates the lightning-fast Groq Cloud API to transcribe, analyze, and beautifully format completely unscripted, overlapping, and chaotic meeting audio into structured, actionable PDF artifacts.
 
-## 🏗️ System Architecture 
+## System Architecture 
 
 ![Architecture](https://img.shields.io/badge/Architecture-Cloud_Native-blue) 
 ![Stack](https://img.shields.io/badge/Stack-FastAPI%20|%20Manifest%20V3%20|%20Groq%20API-success)
@@ -21,7 +21,7 @@ The system operates across three seamlessly integrated layers:
 
 ---
 
-## ⚡ Insane Optimizations & Engineering Feats
+## Optimizations & Engineering Feats
 
 We specifically refactored this codebase to eradicate the massive bottlenecks associated with traditional AI audio pipelines. 
 
@@ -42,7 +42,7 @@ DOM-level Network APIs force users to keep the Chrome popup window open, which r
 
 ---
 
-## 💻 Tech Stack Setup
+## Tech Stack Setup
 
 ### Backend (FastAPI) Requirements
 - Python 3.10+
@@ -68,13 +68,13 @@ DOM-level Network APIs force users to keep the Chrome popup window open, which r
    ```
 *(Deploy instantly on Railway/Render using the provided ultra-lightweight CPU-agnostic `Dockerfile`)*
 
-## 🧩 Extension Installation
+## Extension Installation
 1. Navigate to `chrome://extensions/` in Chrome.
 2. Toggle **Developer mode** in the upper-right corner.
 3. Click **Load unpacked** and select the `/extension` directory.
 4. Pin the CatchUp! icon to your browser bar.
 
-## 📝 Usage Guide
+## Usage Guide
 1. **Agenda Input:** Open CatchUp! and copy/paste your core topics into the Agenda text area. Hit *Set as default* if it's a recurring meeting format.
 2. **Audio Input:**
    - Go to the *Record* tab to capture a live standup.
