@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+python-multipart
+openai-whisper
+langchain
+langchain-community
+langchain-openai
+langchain-text-splitters
+openai
+faiss-cpu
+reportlab
+ffmpeg-python
