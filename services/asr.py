@@ -1,18 +1,22 @@
-import whisper
 import os
-
-MODEL_NAME = os.getenv("WHISPER_MODEL", "base")
-print(f"Loading Whisper model {MODEL_NAME}...")
-try:
-    model = whisper.load_model(MODEL_NAME)
-except Exception as e:
-    print(f"Warning: Could not load Whisper model. {e}")
-    model = None
+from groq import Groq
 
 def transcribe_audio(audio_path: str) -> dict:
-    if not model:
-        raise Exception("Whisper model not initialized.")
-    print(f"Transcribing {audio_path}...")
-    prompt = "This is a meeting that contains English, Hindi, and Hinglish. Please transcribe accurately."
-    result = model.transcribe(audio_path, initial_prompt=prompt)
-    return result
+    print(f"Transcribing {audio_path} via Groq Cloud API...")
+    
+    # Initialize Groq client
+    api_key = os.environ.get("GROQ_API_KEY")
+    if not api_key:
+        raise Exception("GROQ_API_KEY environment variable is extremely required.")
+    
+    client = Groq(api_key=api_key)
+    
+    with open(audio_path, "rb") as file:
+        transcription = client.audio.transcriptions.create(
+            file=(os.path.basename(audio_path), file.read()),
+            model="whisper-large-v3",
+            prompt="This is a meeting that contains English, Hindi, and Hinglish. Please transcribe accurately.",
+            response_format="verbose_json",
+        )
+        
+    return {"text": transcription.text}
