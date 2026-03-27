@@ -11,3 +11,6 @@ openai
 faiss-cpu
 reportlab
 ffmpeg-python
+langchain-groq
+langchain-huggingface
+sentence-transformers
