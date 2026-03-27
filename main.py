@@ -79,7 +79,10 @@ async def generate_mom(
         )
         
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        import traceback
+        traceback.print_exc()
+        print(f"FATAL ERROR: {repr(e)}")
+        raise HTTPException(status_code=500, detail=f"System Error: {repr(e)}")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
